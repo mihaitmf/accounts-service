@@ -12,10 +12,6 @@ public class AccountController {
     @RequestMapping(value = "/account", method = RequestMethod.POST)
     public Account create(@RequestBody Account account) {
 
-        System.out.println("################## controller #########################");
-        System.out.println(account);
-        System.out.println("################## controller end #########################");
-
         return account;
     }
 }
