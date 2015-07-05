@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 public class DefaultAccountService implements AccountService {
     @Override
     public AccountVO create(AccountVO accountVO) {
-        return null;
+        return accountVO;
     }
 }

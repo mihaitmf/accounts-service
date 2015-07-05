@@ -10,9 +10,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccountControllerTest {
@@ -34,6 +32,5 @@ public class AccountControllerTest {
 
         assertEquals("The Controller should return directly the Account object received from the Service", expectedResponse, actualResponse);
         verify(accountService, times(1)).create(request);
-
     }
 }

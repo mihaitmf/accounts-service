@@ -2,7 +2,6 @@ package accounts.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.filter.DelegatingFilterProxy;
@@ -26,23 +25,20 @@ public class LoggingFilter extends DelegatingFilterProxy {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        HttpServletRequest servletRequest = (HttpServletRequest) request;
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
 
-        final int CAP = 200;
+        final byte[] requestCopy = FileCopyUtils.copyToByteArray(request.getInputStream());
 
-        final byte[] contents = FileCopyUtils.copyToByteArray(request.getInputStream());
+        log.info("HTTP REQUEST: {} {} - contents: {}", httpRequest.getMethod(), httpRequest.getRequestURI(), new String(requestCopy));
 
-        log.info("{} {} - contents: {}", servletRequest.getMethod(), servletRequest.getRequestURI(), new String(contents));
-
-        HttpServletRequestWrapper wrapper = new HttpServletRequestWrapper(servletRequest) {
+        HttpServletRequestWrapper requestWrapper = new HttpServletRequestWrapper(httpRequest) {
             @Override
             public ServletInputStream getInputStream() throws IOException {
-                return new ByteArrayInputStreamWrapper(contents);
+                return new ByteArrayInputStreamWrapper(requestCopy);
             }
         };
 
-        //super.doFilter(wrapper, response, filterChain);
-        filterChain.doFilter(wrapper, response);
+        filterChain.doFilter(requestWrapper, response);
     }
 
     private class ByteArrayInputStreamWrapper extends ServletInputStream {

@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 public class AccountController {
 
@@ -15,7 +17,7 @@ public class AccountController {
     private AccountService accountService;
 
     @RequestMapping(value = "/account", method = RequestMethod.POST)
-    public AccountVO create(@RequestBody AccountVO accountVO) {
+    public AccountVO create(@RequestBody @Valid AccountVO accountVO) {
 
         return accountService.create(accountVO);
     }
