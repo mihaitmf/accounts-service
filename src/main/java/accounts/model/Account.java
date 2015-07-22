@@ -13,7 +13,7 @@ public class Account {
 
     @Id
     @GeneratedValue
-    @Column(name = "AccountId")
+    @Column(name = "Accountid")
     private Long id;
 
     @NotNull
